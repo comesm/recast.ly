@@ -6,7 +6,7 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0],
       fetchedVideos: [],
       options: {
-        query: 'react',
+        query: 'hack reactor',
         max: 5,
         key: window.YOUTUBE_API_KEY
       }
@@ -17,9 +17,22 @@ class App extends React.Component {
       currentVideo: video
     });
   }
+  searchVideos(queryString) {
+    console.log(queryString);
+    this.setState({
+      options: {
+        query: queryString,
+        max: 5,
+        key: window.YOUTUBE_API_KEY
+      } 
+
+    });
+    this.props.searchYouTube(this.state.options, this.fetchVideos.bind(this));
+  }
   fetchVideos(videos) {
     this.setState({
-      fetchedVideos: videos
+      fetchedVideos: videos,
+      currentVideo: videos[0]
     });
   }
   componentDidMount() {
@@ -29,7 +42,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav liveSearch={this.searchVideos.bind(this)}/>
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo} />
         </div>
