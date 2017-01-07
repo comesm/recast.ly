@@ -4,29 +4,26 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentVideo: window.exampleVideoData[0],
-      fetchedVideos: window.exampleVideoData
+      fetchedVideos: [],
+      options: {
+        query: 'react',
+        max: 5,
+        key: window.YOUTUBE_API_KEY
+      }
     };
-
   }
   selectVideo(video) {
-    
     this.setState({
       currentVideo: video
-
     });
   }
   fetchVideos(videos) {
-    
     this.setState({
       fetchedVideos: videos
-
     });
   }
-
-
   componentDidMount() {
-    console.log(this.props);
-    this.props.searchYouTube(window.options, this.fetchVideos.bind(this));
+    this.props.searchYouTube(this.state.options, this.fetchVideos.bind(this));
   }
 
   render() {
@@ -37,7 +34,7 @@ class App extends React.Component {
           <VideoPlayer video={this.state.currentVideo} />
         </div>
         <div className="col-md-5">
-          <VideoList videoSelection={ this.selectVideo.bind(this) } videos={this.state.fetchedVideos} />
+          <VideoList videoSelection={this.selectVideo.bind(this)} videos={this.state.fetchedVideos} />
         </div>
       </div>
     );
