@@ -3,15 +3,32 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentVideo: window.exampleVideoData[0]
+      currentVideo: window.exampleVideoData[0],
+      fetchedVideos: window.exampleVideoData
     };
+
   }
   selectVideo(video) {
     
     this.setState({
-      currentVideo: video  
+      currentVideo: video
+
     });
   }
+  fetchVideos(videos) {
+    
+    this.setState({
+      fetchedVideos: videos
+
+    });
+  }
+
+
+  componentDidMount() {
+    console.log(this.props);
+    this.props.searchYouTube(window.options, this.fetchVideos.bind(this));
+  }
+
   render() {
     return (
       <div>
@@ -20,7 +37,7 @@ class App extends React.Component {
           <VideoPlayer video={this.state.currentVideo} />
         </div>
         <div className="col-md-5">
-          <VideoList videoSelection={ this.selectVideo.bind(this) } videos={window.exampleVideoData} />
+          <VideoList videoSelection={ this.selectVideo.bind(this) } videos={this.state.fetchedVideos} />
         </div>
       </div>
     );
