@@ -7,7 +7,7 @@ class App extends React.Component {
     };
   }
   selectVideo(video) {
-    // console.log(video);
+
     this.setState({
       currentVideo: video  
     });
